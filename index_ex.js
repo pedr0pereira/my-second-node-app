@@ -74,4 +74,20 @@ app.put('/pessoas/:id', (req, res) => {
   return res.send({ message: 'Dados da pessoa atualizados com sucesso' });
 });
 
+//DELETE
+app.delete('/pessoas/:id', (req, res) => {
+  const { id } = req.params;
+
+  // Verifica se a pessoa existe
+  const index = people.findIndex((p) => p.id === parseInt(id, 10));
+  if (index === -1) {
+    return res.status(404).send({ message: 'Pessoa não encontrada' });
+  }
+
+  // Remove a pessoa
+  const remove = people.splice(index, 1);
+
+  return res.send({ message: 'Pessoa removida com sucesso', pessoa: remove});
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
